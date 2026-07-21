@@ -1,4 +1,16 @@
-# React + Vite
+# Architectural Portfolio
+
+The portfolio reads published projects from Supabase and sends contact submissions to an `inquiries` table. It keeps a local project fallback before credentials are configured.
+
+## Configure Supabase
+
+1. Create a Supabase project and run [`supabase/schema.sql`](supabase/schema.sql) in its SQL Editor.
+2. Copy `.env.example` to `.env.local`, then add the Project URL and anon key from Supabase's API settings.
+3. Run `npm run dev`.
+
+Never expose a service-role key in a Vite environment variable. The included schema enables RLS, allowing visitors only to read published projects and submit inquiries.
+
+## Vite starter notes
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 

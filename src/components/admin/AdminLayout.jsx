@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Outlet, Navigate, Link, useLocation } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../contexts/AuthContext'
@@ -7,6 +8,11 @@ export default function AdminLayout() {
   const { t } = useTranslation()
   const { user, loading, signOut } = useAuth()
   const location = useLocation()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  useEffect(() => {
+    setSidebarOpen(false)
+  }, [location])
 
   if (loading) {
     return <div className="admin-loading">{t('admin.loading')}</div>
@@ -24,7 +30,8 @@ export default function AdminLayout() {
 
   return (
     <div className="admin-layout">
-      <aside className="admin-sidebar">
+      <div className={`admin-sidebar-overlay ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(false)} />
+      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="admin-sidebar-top">
           <p className="admin-logo">ADMIN DASHBOARD</p>
           <nav className="admin-nav">
@@ -47,6 +54,11 @@ export default function AdminLayout() {
         </button>
       </aside>
       <main className="admin-main">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+          <button className="admin-mobile-toggle" onClick={() => setSidebarOpen(!sidebarOpen)} aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          </button>
+        </div>
         <Outlet />
       </main>
     </div>

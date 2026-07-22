@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../lib/supabase'
 import imageCompression from 'browser-image-compression'
+import CropModal from '../../components/CropModal'
+import { getCroppedImg } from '../../lib/cropImage'
 
 export default function ProjectEditor() {
   const { id } = useParams()
@@ -20,6 +22,7 @@ export default function ProjectEditor() {
   const [loading, setLoading] = useState(!isNew)
   const [saving, setSaving] = useState(false)
   const [toast, setToast] = useState('')
+  const [cropModal, setCropModal] = useState(null)
 
   function showToast(msg) { setToast(msg); setTimeout(() => setToast(''), 2000) }
 
@@ -155,6 +158,15 @@ export default function ProjectEditor() {
     setGallery(updated)
   }
 
+  async function handleCropConfirm(cropPixels) {
+    if (!cropModal) return
+    const blob = await getCroppedImg(cropModal.image, cropPixels)
+    const file = new File([blob], 'cover.jpg', { type: 'image/jpeg' })
+    setCoverFile(file)
+    setCoverPreview(URL.createObjectURL(blob))
+    setCropModal(null)
+  }
+
   if (loading) return <p>{t('admin.loading')}</p>
 
   return (
@@ -207,7 +219,10 @@ export default function ProjectEditor() {
         <h2>Cover Image</h2>
         <label className="admin-field">
           <input type="file" accept="image/jpeg,image/png,image/webp,image/avif"
-            onChange={(e) => { setCoverFile(e.target.files[0]); setCoverPreview(URL.createObjectURL(e.target.files[0])) }} />
+            onChange={(e) => {
+              const file = e.target.files[0]
+              if (file) setCropModal({ image: URL.createObjectURL(file) })
+            }} />
           {coverPreview && <img src={coverPreview} alt="Cover preview" className="admin-preview" />}
         </label>
       </section>
@@ -280,6 +295,15 @@ export default function ProjectEditor() {
           {saving ? t('admin.loading') : t('admin.publish')}
         </button>
       </div>
+
+      {cropModal && (
+        <CropModal
+          image={cropModal.image}
+          aspect={16 / 9}
+          onCrop={handleCropConfirm}
+          onCancel={() => setCropModal(null)}
+        />
+      )}
     </div>
   )
 }

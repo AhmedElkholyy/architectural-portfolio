@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../lib/supabase'
 import imageCompression from 'browser-image-compression'
+import CropModal from '../../components/CropModal'
+import { getCroppedImg } from '../../lib/cropImage'
 
 export default function Content() {
   const { t } = useTranslation()
@@ -11,6 +13,7 @@ export default function Content() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [toast, setToast] = useState('')
+  const [cropModal, setCropModal] = useState(null)
 
   function showToast(msg) {
     setToast(msg)
@@ -74,6 +77,14 @@ export default function Content() {
     }
   }
 
+  async function handleCropConfirm(cropPixels) {
+    if (!cropModal) return
+    const blob = await getCroppedImg(cropModal.image, cropPixels)
+    const file = new File([blob], 'profile.jpg', { type: 'image/jpeg' })
+    setProfileFile(file)
+    setCropModal(null)
+  }
+
   if (loading) return <p>{t('admin.loading')}</p>
 
   return (
@@ -115,8 +126,13 @@ export default function Content() {
         <h2>{t('admin.heroSection')}</h2>
         <label className="admin-field">
           <span>{t('admin.profileImage')}</span>
-          <input type="file" accept="image/*" onChange={(e) => setProfileFile(e.target.files[0])} />
-          {s?.profile_image_url && !profileFile && <img src={s.profile_image_url} alt="Profile" className="admin-preview admin-preview-circle" />}
+          <input type="file" accept="image/*" onChange={(e) => {
+            const file = e.target.files[0]
+            if (file) setCropModal({ image: URL.createObjectURL(file) })
+          }} />
+          {(profileFile ? URL.createObjectURL(profileFile) : s?.profile_image_url) && (
+            <img src={profileFile ? URL.createObjectURL(profileFile) : s.profile_image_url} alt="Profile" className="admin-preview" />
+          )}
         </label>
         <div className="admin-grid-2">
           <label className="admin-field">
@@ -192,6 +208,15 @@ export default function Content() {
       <button className="admin-save" onClick={handleSave} disabled={saving}>
         {saving ? t('admin.loading') : t('admin.save')}
       </button>
+
+      {cropModal && (
+        <CropModal
+          image={cropModal.image}
+          aspect={16 / 9}
+          onCrop={handleCropConfirm}
+          onCancel={() => setCropModal(null)}
+        />
+      )}
     </div>
   )
 }

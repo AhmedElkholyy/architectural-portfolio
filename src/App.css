@@ -1,4 +1,5 @@
-main { overflow: hidden; }
+main { display: flex; flex-direction: column; min-height: 100vh; overflow: hidden; }
+main > section { flex: 1; }
 
 /* ==================== ADMIN ==================== */
 .admin-loading { display: flex; align-items: center; justify-content: center; height: 100vh; font: 13px 'DM Mono', monospace; color: var(--text-muted); }

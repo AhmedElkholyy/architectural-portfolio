@@ -58,7 +58,7 @@ export default function Navigation() {
     const logoText = settings?.logo_text || 'AK'
     return (
       <>
-        {logoText}<span>.</span>
+        {logoText}
       </>
     )
   }

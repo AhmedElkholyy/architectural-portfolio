@@ -5,6 +5,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { useColorTokens } from './hooks/useColorTokens'
 import LoadingScreen from './components/LoadingScreen'
+import CustomCursor from './components/CustomCursor'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Portfolio from './pages/Portfolio'
@@ -34,24 +35,27 @@ function AppRoutes() {
   useEffect(() => { window.scrollTo(0, 0) }, [location.pathname])
 
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/project/:id" element={<ProjectDetail />} />
-        <Route path="/contact" element={<Contact />} />
-      </Route>
-      <Route path="/admin/login" element={<Login />} />
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<HomeEditor />} />
-        <Route path="home" element={<HomeEditor />} />
-        <Route path="projects" element={<Projects />} />
-        <Route path="projects/new" element={<ProjectEditor />} />
-        <Route path="projects/:id" element={<ProjectEditor />} />
-        <Route path="contact" element={<ContactAdmin />} />
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      {!isAdmin && <CustomCursor />}
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/project/:id" element={<ProjectDetail />} />
+          <Route path="/contact" element={<Contact />} />
+        </Route>
+        <Route path="/admin/login" element={<Login />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<HomeEditor />} />
+          <Route path="home" element={<HomeEditor />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="projects/new" element={<ProjectEditor />} />
+          <Route path="projects/:id" element={<ProjectEditor />} />
+          <Route path="contact" element={<ContactAdmin />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   )
 }
 

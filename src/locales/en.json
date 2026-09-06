@@ -7,12 +7,13 @@
   },
   "home": {
     "about": "About Me",
-    "featured": "Featured Projects",
     "readMore": "More about the practice",
     "heroTitle1": "Spaces that",
     "heroTitle2": "hold a feeling.",
     "heroFallback": "Thoughtful architecture shaped by light, material, and the rituals of everyday life.",
-    "profileAlt": "Profile"
+    "profileAlt": "Profile",
+    "contactMe": "Work with me",
+    "viewPortfolio": "View portfolio"
   },
   "portfolio": {
     "title": "All Projects",
@@ -45,7 +46,6 @@
   "footer": {
     "copyright": "© 2026",
     "title": "Architectural Engineer",
-    "backToTop": "Back to top",
     "fallbackHeading": "Have a place in mind?",
     "authorName": "Amina Khalil"
   },
@@ -70,7 +70,6 @@
     "heroSection": "Hero",
     "footerSection": "Footer",
     "footerEmail": "Footer Email",
-    "featured": "Featured",
     "projectCount": "Projects",
     "messageCount": "Messages",
     "unreadCount": "Unread",
@@ -94,7 +93,6 @@
     "contactAdmin": "Contact Me",
     "contactPageInfo": "Contact Info",
     "profileImage": "Profile Image",
-    "featuredProjects": "Featured Projects (max 3)",
     "logoSection": "Logo",
     "logoType": "Logo Type",
     "logoTypeText": "Text",
@@ -120,6 +118,17 @@
     "socialLinkedin": "LinkedIn URL",
     "subtitleEn": "Subtitle (English)",
     "subtitleAr": "Subtitle (Arabic)",
+    "headingEn": "Heading (English)",
+    "headingAr": "Heading (Arabic)",
+    "aboutEn": "About (English)",
+    "aboutAr": "About (Arabic)",
+    "introEn": "Intro (English)",
+    "introAr": "Intro (Arabic)",
+    "footerCopyEn": "Footer Copy (English)",
+    "footerCopyAr": "Footer Copy (Arabic)",
+    "contactFooter": "Contact & Footer",
+    "homeContent": "Home Content",
+    "colorTokens": "Colors",
     "galleryImage": "Gallery Image",
     "galleryTitleEn": "Title (English)",
     "galleryTitleAr": "Title (Arabic)",

@@ -7,12 +7,13 @@
   },
   "home": {
     "about": "نبذة عني",
-    "featured": "مشاريع مميزة",
     "readMore": "المزيد عن الممارسة",
     "heroTitle1": "مساحات تحمل",
     "heroTitle2": "شعوراً.",
     "heroFallback": "عمارة مدروسة تشكلها الضوء والمواد وطقوس الحياة اليومية.",
-    "profileAlt": "الملف الشخصي"
+    "profileAlt": "الملف الشخصي",
+    "contactMe": "اعمل معي",
+    "viewPortfolio": "استعرض الأعمال"
   },
   "portfolio": {
     "title": "جميع المشاريع",
@@ -45,7 +46,6 @@
   "footer": {
     "copyright": "© ٢٠٢٦",
     "title": "مهندسة معمارية",
-    "backToTop": "العودة للأعلى",
     "fallbackHeading": "هل لديك مكان في ذهنك؟",
     "authorName": "أمينة خليل"
   },
@@ -70,7 +70,6 @@
     "heroSection": "القسم الرئيسي",
     "footerSection": "التذييل",
     "footerEmail": "بريد التذييل",
-    "featured": "مميز",
     "projectCount": "المشاريع",
     "messageCount": "الرسائل",
     "unreadCount": "غير مقروءة",
@@ -94,7 +93,6 @@
     "contactAdmin": "تواصل معنا",
     "contactPageInfo": "معلومات التواصل",
     "profileImage": "صورة الملف الشخصي",
-    "featuredProjects": "المشاريع المميزة (حد أقصى 3)",
     "logoSection": "الشعار",
     "logoType": "نوع الشعار",
     "logoTypeText": "نص",
@@ -120,6 +118,17 @@
     "socialLinkedin": "رابط لينكد إن",
     "subtitleEn": "العنوان الفرعي (الإنجليزية)",
     "subtitleAr": "العنوان الفرعي (العربية)",
+    "headingEn": "العنوان (الإنجليزية)",
+    "headingAr": "العنوان (العربية)",
+    "aboutEn": "نبذة (الإنجليزية)",
+    "aboutAr": "نبذة (العربية)",
+    "introEn": "مقدمة (الإنجليزية)",
+    "introAr": "مقدمة (العربية)",
+    "footerCopyEn": "نص التذييل (الإنجليزية)",
+    "footerCopyAr": "نص التذييل (العربية)",
+    "contactFooter": "تواصل والتذييل",
+    "homeContent": "محتوى الصفحة الرئيسية",
+    "colorTokens": "الألوان",
     "galleryImage": "صورة المعرض",
     "galleryTitleEn": "العنوان (الإنجليزية)",
     "galleryTitleAr": "العنوان (العربية)",

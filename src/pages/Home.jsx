@@ -1,13 +1,11 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 import { useSiteSettings } from '../hooks/useSiteSettings'
-import { useProjects } from '../hooks/useProjects'
-import LoadingState from '../components/LoadingState'
-import ProjectCard from '../components/ProjectCard'
+import AnimatedBackground from '../components/AnimatedBackground'
 
 export default function Home() {
   const { t, i18n } = useTranslation()
-  const { settings, loading, error } = useSiteSettings()
-  const { projects: featured } = useProjects({ featured: true, limit: 3 })
+  const { settings, loading } = useSiteSettings()
 
   const lang = i18n.language
   const title1 = lang === 'ar' ? (settings?.hero_title_ar || t('home.heroTitle1')) : (settings?.hero_title_en || t('home.heroTitle1'))
@@ -16,37 +14,35 @@ export default function Home() {
 
   return (
     <>
+      <AnimatedBackground faded />
+
+      <div className="home-content">
       {loading ? (
         <section className="hero" id="top" />
       ) : (
       <section className="hero" id="top">
         <h1>{title1}<br /><em>{title2}</em></h1>
+        <span className="hero-rule" aria-hidden="true" />
         <p className="hero-subtitle">{heroText}</p>
+        <div className="hero-actions">
+          <Link to="/contact" className="hero-btn hero-btn-primary">{t('home.contactMe')}</Link>
+          <Link to="/portfolio" className="hero-btn">{t('home.viewPortfolio')}</Link>
+        </div>
         {settings?.profile_image_url && (
           <div className="hero-photo-wrap">
-            <img
-              src={settings.profile_image_url}
-              alt={t('home.profileAlt')}
-              className="hero-profile"
-              loading="lazy"
-            />
+            <div className="hero-photo-plate">
+              <img
+                src={settings.profile_image_url}
+                alt={t('home.profileAlt')}
+                className="hero-profile"
+                loading="lazy"
+              />
+            </div>
           </div>
         )}
       </section>
       )}
-
-      <section className="work section" id="work">
-        <div className="section-head">
-          <p className="eyebrow">{t('home.featured')}</p>
-        </div>
-        <LoadingState loading={loading} error={error}>
-          <div className="project-grid">
-            {featured.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        </LoadingState>
-      </section>
+    </div>
     </>
   )
 }

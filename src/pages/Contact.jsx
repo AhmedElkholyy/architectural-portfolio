@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useContactSettings } from '../hooks/useContactSettings'
 import LoadingState from '../components/LoadingState'
 import ContactForm from '../components/ContactForm'
+import AnimatedBackground from '../components/AnimatedBackground'
 
 export default function Contact() {
   const { t, i18n } = useTranslation()
@@ -11,10 +12,13 @@ export default function Contact() {
   const heading = lang === 'ar' ? (settings?.heading_ar || t('contact.title')) : (settings?.heading_en || t('contact.title'))
 
   return (
-    <section className="contact-page" id="top">
+    <>
+      <AnimatedBackground faded />
+      <section className="contact-page" id="top">
       <LoadingState loading={loading} error={error}>
         <div className="contact-header">
           <h1 className="contact-title">{heading}</h1>
+          <p className="contact-intro">{t('contact.intro')}</p>
         </div>
 
         <div className="contact-body">
@@ -66,5 +70,6 @@ export default function Contact() {
         </div>
       </LoadingState>
     </section>
+    </>
   )
 }

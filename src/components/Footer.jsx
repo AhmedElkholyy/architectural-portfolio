@@ -47,15 +47,7 @@ export default function Footer() {
       </div>
 
       <p className="footer-profession">{footerTitle}</p>
-
-      <div className="footer-bottom">
-        <div />
-        <a href="#top" className="footer-back-top" aria-label={t('footer.backToTop')} onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
-            <path d="M12 19V5M5 12l7-7 7 7" />
-          </svg>
-        </a>
-      </div>
+      <div className="footer-bottom" />
     </footer>
   )
 }

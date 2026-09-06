@@ -70,9 +70,14 @@ export default function Navigation() {
       </Link>
 
       <div className="nav-links">
-        <Link to="/">{t('nav.home')}</Link>
-        <Link to="/portfolio">{t('nav.projects')}</Link>
-        <Link to="/contact">{t('nav.contact')}</Link>
+        <Link to="/" className={location.pathname === '/' ? 'active' : ''}>{t('nav.home')}</Link>
+        <Link
+          to="/portfolio"
+          className={location.pathname.startsWith('/portfolio') || location.pathname.startsWith('/project') ? 'active' : ''}
+        >
+          {t('nav.projects')}
+        </Link>
+        <Link to="/contact" className={location.pathname.startsWith('/contact') ? 'active' : ''}>{t('nav.contact')}</Link>
       </div>
 
       <LanguageSwitcher />
@@ -101,14 +106,18 @@ export default function Navigation() {
         id="mobile-menu"
         ref={menuRef}
         className={`nav-mobile-menu ${isMenuOpen ? 'open' : ''}`}
-        role="dialog"
-        aria-modal="true"
+        role="navigation"
         aria-label={t('nav.ariaHome')}
       >
         <div className="nav-mobile-links">
-          <Link to="/">{t('nav.home')}</Link>
-          <Link to="/portfolio">{t('nav.projects')}</Link>
-          <Link to="/contact">{t('nav.contact')}</Link>
+          <Link to="/" className={location.pathname === '/' ? 'active' : ''}>{t('nav.home')}</Link>
+          <Link
+            to="/portfolio"
+            className={location.pathname.startsWith('/portfolio') || location.pathname.startsWith('/project') ? 'active' : ''}
+          >
+            {t('nav.projects')}
+          </Link>
+          <Link to="/contact" className={location.pathname.startsWith('/contact') ? 'active' : ''}>{t('nav.contact')}</Link>
           <LanguageSwitcher />
         </div>
       </div>

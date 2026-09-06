@@ -16,7 +16,7 @@ export default function Projects() {
   async function fetchProjects() {
     const { data } = await supabase
       .from('projects')
-      .select('id, title_en, title_ar, subtitle_en, subtitle_ar, published, cover_image_url, featured_position, created_at')
+      .select('id, title_en, title_ar, subtitle_en, subtitle_ar, published, cover_image_url, created_at')
       .order('created_at', { ascending: false })
     setProjects(data || [])
     setLoading(false)
@@ -27,28 +27,6 @@ export default function Projects() {
       .from('projects')
       .update({ published: !project.published, updated_at: new Date().toISOString() })
       .eq('id', project.id)
-    fetchProjects()
-  }
-
-  async function toggleFeatured(project) {
-    const currentFeatured = projects.filter(p => p.featured_position).sort((a, b) => a.featured_position - b.featured_position)
-    if (project.featured_position) {
-      await supabase.from('projects').update({ featured_position: null, updated_at: new Date().toISOString() }).eq('id', project.id)
-    } else if (currentFeatured.length < 3) {
-      await supabase.from('projects').update({ featured_position: currentFeatured.length + 1, updated_at: new Date().toISOString() }).eq('id', project.id)
-    }
-    fetchProjects()
-  }
-
-  async function moveFeatured(project, direction) {
-    const currentFeatured = projects.filter(p => p.featured_position).sort((a, b) => a.featured_position - b.featured_position)
-    const idx = currentFeatured.findIndex(p => p.id === project.id)
-    if (idx < 0) return
-    const swapIdx = idx + direction
-    if (swapIdx < 0 || swapIdx >= currentFeatured.length) return
-    const other = currentFeatured[swapIdx]
-    await supabase.from('projects').update({ featured_position: swapIdx + 1, updated_at: new Date().toISOString() }).eq('id', project.id)
-    await supabase.from('projects').update({ featured_position: idx + 1, updated_at: new Date().toISOString() }).eq('id', other.id)
     fetchProjects()
   }
 
@@ -68,8 +46,6 @@ export default function Projects() {
   }
 
   if (loading) return <p>{t('admin.loading')}</p>
-
-  const featuredCount = projects.filter(p => p.featured_position).length
 
   return (
     <div className="admin-editor">
@@ -99,9 +75,6 @@ export default function Projects() {
                   <span className={`admin-badge ${p.published ? 'published' : 'draft'}`}>
                     {p.published ? t('admin.published') : t('admin.draft')}
                   </span>
-                  {p.featured_position && (
-                    <span className="admin-badge featured">#{p.featured_position}</span>
-                  )}
                 </div>
               </div>
               <div className="admin-project-actions">
@@ -109,16 +82,6 @@ export default function Projects() {
                 <button onClick={() => togglePublish(p)} className="admin-action-link">
                   {p.published ? t('admin.unpublish') : t('admin.publish')}
                 </button>
-                <button onClick={() => toggleFeatured(p)} className="admin-action-link"
-                  disabled={!p.featured_position && featuredCount >= 3}>
-                  {p.featured_position ? 'Unfeature' : t('admin.featured')}
-                </button>
-                {p.featured_position && (
-                  <span className="admin-featured-arrows">
-                    <button onClick={() => moveFeatured(p, -1)} disabled={p.featured_position <= 1}>↑</button>
-                    <button onClick={() => moveFeatured(p, 1)} disabled={p.featured_position >= featuredCount}>↓</button>
-                  </span>
-                )}
                 <button onClick={() => requestDelete(p)} className="admin-action-link danger">{t('admin.delete')}</button>
               </div>
             </div>

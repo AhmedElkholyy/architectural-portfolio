@@ -1,28 +1,47 @@
 # Architectural Portfolio
 
-The portfolio reads published projects from Supabase and sends contact submissions to an `inquiries` table. It keeps a local project fallback before credentials are configured.
+A bilingual (English/Arabic) portfolio SPA for architectural projects, with a content-management admin dashboard, backed by Supabase.
 
-## Configure Supabase
+## Tech Stack
 
-1. Create a Supabase project and run [`supabase/schema.sql`](supabase/schema.sql) in its SQL Editor.
-2. Copy `.env.example` to `.env.local`, then add the Project URL and anon key from Supabase's API settings.
-3. Run `npm run dev`.
+- **React 19** + **Vite 8** (Oxc plugin)
+- **React Router v8** for client-side routing
+- **Supabase** (Auth, Postgres, Storage) for backend
+- **i18next** for English/Arabic language support
+- **Lenis** for smooth scrolling
+- **Oxlint** for linting
+- Vanilla CSS with design tokens via CSS custom properties
 
-Never expose a service-role key in a Vite environment variable. The included schema enables RLS, allowing visitors only to read published projects and submit inquiries.
+## Features
 
-## Vite starter notes
+- Public pages: Home, Portfolio grid, Project detail with lightbox, Contact form
+- Admin dashboard at `/admin` with login, project CRUD, site settings, and message inbox
+- Bilingual content (`_en`/`_ar` columns) with live language switching and RTL support
+- Dynamic theming via `color_tokens` stored in Supabase
+- Image pipeline: crop, compress, and upload to Supabase Storage
+- Responsive design with mobile navigation
+- Graceful degradation when Supabase is not configured (local fallback data)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Setup
 
-Currently, two official plugins are available:
+1. Create a Supabase project and run the migration files in [`supabase/migrations/`](supabase/migrations/) in order (001 through 005) via the SQL Editor.
+2. Copy `.env.example` to `.env.local` and fill in your Supabase credentials:
+   - `VITE_SUPABASE_URL` — Project URL from Supabase API settings
+   - `VITE_SUPABASE_ANON_KEY` — Anon/public key from Supabase API settings
+3. Install dependencies and start the dev server:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```sh
+npm install
+npm run dev
+```
 
-## React Compiler
+Never expose a service-role key in a Vite environment variable. The included migrations enable RLS, allowing public read access to published projects and settings, and anonymous contact form submissions only.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Scripts
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start Vite dev server |
+| `npm run build` | Production build to `dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Run Oxlint |

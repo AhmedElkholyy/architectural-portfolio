@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
 import LoadingState from '../components/LoadingState'
+import AnimatedBackground from '../components/AnimatedBackground'
 
 export default function ProjectDetail() {
   const { id } = useParams()
@@ -67,14 +68,18 @@ export default function ProjectDetail() {
   )
 
   return (
-    <section>
-      <LoadingState loading={loading} error={error}>
+    <>
+      <AnimatedBackground faded />
+      <section>
+        <LoadingState loading={loading} error={error}>
         {project && (
           <>
             <div className="pd-cover" style={project.cover_image_url ? { backgroundImage: `url(${project.cover_image_url})` } : undefined}>
               <div className="pd-cover-overlay" />
+              <span className="pd-sheet pd-sheet-tl" aria-hidden="true" />
+              <span className="pd-sheet pd-sheet-br" aria-hidden="true" />
               <div className="pd-cover-content">
-                <Link to="/portfolio" className="pd-back">← {t('project.backToPortfolio')}</Link>
+                <Link to="/portfolio" className="pd-back"><span aria-hidden="true">←</span> {t('project.backToPortfolio')}</Link>
                 <h1 className="pd-title">{tField(project.title_en, project.title_ar)}</h1>
                 {(project.subtitle_en || project.subtitle_ar) && (
                   <p className="pd-subtitle">{tField(project.subtitle_en, project.subtitle_ar)}</p>
@@ -115,6 +120,9 @@ export default function ProjectDetail() {
               <div className="pd-modal-overlay" onClick={closeModal} role="dialog" aria-modal="true">
                 <button className="pd-modal-close" onClick={closeModal} aria-label="Close">×</button>
                 <button className="pd-modal-prev" onClick={(e) => { e.stopPropagation(); prevImage() }} disabled={modal.index === 0}>‹</button>
+                {images.length > 1 && (
+                  <span className="pd-modal-count">{modal.index + 1} / {images.length}</span>
+                )}
                 <div className="pd-modal-body" onClick={(e) => e.stopPropagation()}>
                   <div className="pd-modal-image-wrap">
                     <img src={currentImage.image_url} alt={tField(currentImage.alt_en, currentImage.alt_ar)} className="pd-modal-image" />
@@ -140,5 +148,6 @@ export default function ProjectDetail() {
         )}
       </LoadingState>
     </section>
+    </>
   )
 }

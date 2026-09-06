@@ -10,16 +10,19 @@ export default function ProjectCard({ project }) {
   return (
     <Link to={`/project/${project.id}`} className="project-card">
       <article className="project">
-        <div
-          className="project-image"
-          style={project.cover_image_url ? { backgroundImage: `url(${project.cover_image_url})` } : undefined}
-        >
+        <div className="project-image">
+          <div
+            className="project-bg"
+            style={project.cover_image_url ? { backgroundImage: `url(${project.cover_image_url})` } : undefined}
+          />
           <div className="shape" />
+          <span className="project-corner project-corner-tl" aria-hidden="true" />
+          <span className="project-corner project-corner-br" aria-hidden="true" />
         </div>
         <div className="project-meta">
           <h2>{title}</h2>
+          <span className="project-arrow" aria-hidden="true">↗</span>
           {subtitle && <p className="project-card-subtitle">{subtitle}</p>}
-          <span>↗</span>
         </div>
       </article>
     </Link>
